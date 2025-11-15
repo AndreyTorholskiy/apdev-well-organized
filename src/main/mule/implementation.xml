@@ -13,4 +13,8 @@ http://www.mulesoft.org/schema/mule/american-flights-api http://www.mulesoft.org
 	<sub-flow name="setCode" doc:id="5e73ac6d-fde7-41ac-a3de-c7df130a019b" >
 		<set-variable value='#[attributes.queryParams.code default "SFO"]' doc:name="Code" doc:id="defc46ff-4dfb-4c38-8058-0eb46ab78c7d" variableName="code"/>
 	</sub-flow>
+	<flow name="getUnitedFlights" doc:id="ac2e50e7-13d1-4454-a78c-cbce7b80ba8a" >
+		<http:listener doc:name="GET /united" doc:id="df0a3f36-6ce3-43f4-a84b-643d84237c92" config-ref="HTTP_Listener_config" path="/united" allowedMethods="GET"/>
+		<http:request method="GET" doc:name="Get flights" doc:id="8046181c-0f5f-40fc-916c-21d2a157b733" />
+	</flow>
 </mule>
