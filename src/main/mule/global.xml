@@ -13,4 +13,7 @@ http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/sc
 	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="9b464f46-5d4d-4e61-b6b2-dd09f2fd5e7b" file="config\config.yaml" key="${runtime.property}" >
 		<secure-properties:encrypt algorithm="Blowfish" />
 	</secure-properties:config>
+	<http:request-config name="HTTP_Request_config_training" doc:name="HTTP Request configuration" doc:id="7db339d0-4d3c-41f6-a499-f41949418c85" basePath="${secure::training.basepath}" >
+		<http:request-connection host="${secure::training.host}" port="${secure::training.port}" />
+	</http:request-config>
 </mule>
