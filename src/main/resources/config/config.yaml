@@ -14,3 +14,8 @@ training:
   port: "80"
   basepath: "/"
   protocol: "HTTP"
+
+delta:
+  wsdl: "http://mu.mule-training.com/delta?wsdl"
+  service: "![GBh4Lbhelwvr4dWT0K8TLTeP7bMewrHc]"
+  port: "![GqW0xKQL4+Cz160Te3MT4kIXE8XDsk5doT40A75yEk4=]"
