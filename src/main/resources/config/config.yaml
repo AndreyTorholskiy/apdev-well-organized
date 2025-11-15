@@ -1,2 +1,10 @@
 http:
   port: "8089"
+  
+american:
+  host: "mu.mule-training.com"
+  port: "80"
+  basepath: "/american"
+  protocol: "HTTP"
+  client_id: "![0N2Pslb+lojcFC8JngxPLqED9jMnFmWMWtbeLM0ZXITuHWj4AgSHeA==]"
+  client_secret: "![ybab48jaZQfE2hAdijGRS/eLa3X9cxg5T0p+rg5PBi860hD9pH4bqg==]"
