@@ -107,5 +107,25 @@ payload.body.ns0#findFlightResponse.*return map ( return , indexOfReturn ) -> {
 	</flow>
 	<flow name="getAllAirlinesFlights" doc:id="d08a090f-1146-4e20-bd60-0f5ecba2bfe1" >
 		<http:listener doc:name="GET /flights" doc:id="08f886a4-9546-44e0-8c56-a1cd6a9e7ad0" config-ref="HTTP_Listener_config" path="/flights" allowedMethods="GET"/>
+		<scatter-gather doc:name="Scatter-Gather" doc:id="9bcb0acb-d3c6-4693-bb28-128aa3a3b55a" >
+			<route >
+				<flow-ref doc:name="getAmericanFlights" doc:id="8eda7b05-371d-4a41-a8f9-3abfa561070a" name="getAmericansFlights"/>
+			</route>
+			<route >
+				<flow-ref doc:name="getUnitedFlights" doc:id="7bfcb859-441d-4e76-b13e-c2f6bfe7b4fb" name="getUnitedFlights1"/>
+			</route>
+			<route >
+				<flow-ref doc:name="getDeltaFlights" doc:id="f2c0784f-f67f-444d-a595-6ea7d17032e4" name="getDeltaFlights"/>
+			</route>
+		</scatter-gather>
+		<ee:transform doc:name="Flatten to [Flight]" doc:id="c3a9c315-a600-4cb3-987a-2f1b3add201b" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+flatten(payload..payload)]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="b5ebc603-e50a-4190-a0fa-4c5cb8427bf0" />
 	</flow>
 </mule>
