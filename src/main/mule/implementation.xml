@@ -105,4 +105,7 @@ payload.body.ns0#findFlightResponse.*return map ( return , indexOfReturn ) -> {
 		</ee:transform>
 		<logger level="INFO" doc:name="Logger" doc:id="68c0896c-d766-4124-927d-5436180bb9fe" />
 	</flow>
+	<flow name="getAllAirlinesFlights" doc:id="d08a090f-1146-4e20-bd60-0f5ecba2bfe1" >
+		<http:listener doc:name="GET /flights" doc:id="08f886a4-9546-44e0-8c56-a1cd6a9e7ad0" config-ref="HTTP_Listener_config" path="/flights" allowedMethods="GET"/>
+	</flow>
 </mule>
