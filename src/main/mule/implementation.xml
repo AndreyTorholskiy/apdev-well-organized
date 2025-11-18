@@ -10,7 +10,8 @@ http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/
 http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd">
 	<flow name="getFlights" doc:id="7565e058-6dc7-478f-965b-24490db2e0d3" >
 		<http:listener doc:name="GET /flights" doc:id="c36ec391-a1f1-4ab6-9108-30c1f838b76b" config-ref="HTTP_Listener_config" path="/flights" allowedMethods="GET">
-			<http:error-response >
+			<http:response statusCode="#[vars.httpStatus default 200]" />
+			<http:error-response statusCode="#[vars.httpStatus default 500]">
 				<http:body ><![CDATA[#[payload]]]></http:body>
 			</http:error-response>
 		</http:listener>
@@ -40,6 +41,34 @@ payload]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<logger level="INFO" doc:name="Logger" doc:id="79d97dc0-ada5-46f6-8d94-806b0b9de391" />
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="1b3ec995-d04f-4dea-ac73-80a599aa3dab" type="AMERICAN-FLIGHTS-API:BAD_REQUEST">
+				<ee:transform doc:name="No flights" doc:id="80019291-c4d6-40b6-9eae-394dbf27671f" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"message": "No flights to " ++ vars.code as String
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+				<set-variable value="200" doc:name="httpStatus" doc:id="8ffd8703-80f7-45c8-82be-27f0b7ad689d" variableName="httpStatus"/>
+			</on-error-propagate>
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="9ab1f238-2515-4f1e-8a97-540b452b2792" type="VALIDATION:INVALID_BOOLEAN">
+				<ee:transform doc:name="error.desription" doc:id="0d6984b0-f013-4ec0-8a0c-f2edbf877961" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"message": error.description
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+				<set-variable value="400" doc:name="httpStatus" doc:id="df11c3f9-ed41-4527-abbb-593466782f19" variableName="httpStatus"/>
+			</on-error-continue>
+		</error-handler>
 	</flow>
 	<flow name="getAmericansFlights" doc:id="de757d1f-2a17-432a-a09e-051a67cafb35">
 		<american-flights-api:get-flights doc:name="Get flights" doc:id="2f5fbccf-3b9d-49e1-81c7-580c4ed47633" config-ref="American_Flights_API_Config" client-id="${secure::american.client_id}" client-secret="${secure::american.client_secret}" destination="#[vars.code]" />
