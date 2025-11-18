@@ -23,19 +23,5 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 			<wsc:web-service-security actor="http://schemas.xmlsoap.org/soap/actor/next" />
 		</wsc:connection>
 	</wsc:config>
-	<configuration doc:name="Configuration" doc:id="b914e778-d686-49fc-8742-b6d1081cbd6e" defaultErrorHandler-ref="globalError_Handler" />
-	<error-handler name="globalError_Handler" doc:id="b1ad0281-f0cf-494a-933d-b08b9ec1fe62" >
-		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="7305b7c2-fc0a-49d3-a362-e4e022cffb36" type="ANY">
-			<ee:transform doc:name="error.description" doc:id="e21581fe-62e7-4505-9e76-96e974cbdce1">
-				<ee:message>
-					<ee:set-payload><![CDATA[%dw 2.0
-output application/json
----
-{
-	"message": error.description
-}]]></ee:set-payload>
-				</ee:message>
-			</ee:transform>
-		</on-error-propagate>
-	</error-handler>
+	<configuration doc:name="Configuration" doc:id="f003b7c4-e65b-44e8-a580-74ae22d443e4" defaultErrorHandler-ref="globalError_Handler" />
 </mule>
