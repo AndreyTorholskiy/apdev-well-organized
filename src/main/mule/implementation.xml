@@ -9,12 +9,6 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd
 http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd">
 	<flow name="getFlights" doc:id="7565e058-6dc7-478f-965b-24490db2e0d3" >
-		<http:listener doc:name="GET /flights" doc:id="c36ec391-a1f1-4ab6-9108-30c1f838b76b" config-ref="HTTP_Listener_config" path="/flights" allowedMethods="GET">
-			<http:response statusCode="#[vars.httpStatus default 200]" />
-			<http:error-response statusCode="#[vars.httpStatus default 500]">
-				<http:body ><![CDATA[#[payload]]]></http:body>
-			</http:error-response>
-		</http:listener>
 		<set-variable value="#[message.attributes.queryParams.airline]" doc:name="airline" doc:id="e55ecf55-caf1-4b02-95ec-1d7d9b03ecc1" variableName="airline"/>
 		<flow-ref doc:name="setCode" doc:id="2a4af0c0-02f5-4685-a0ea-bc5e906ea600" name="setCode"/>
 		<validation:is-true doc:name="Is valid destination" doc:id="f4b272a8-3720-4544-924b-ea7484ae7f8a" expression='#[["SFO", "LAX", "CLE", "PDX", "PDF"] contains vars.code]' message='#["Invalid destination, boy:" ++ " " ++ (vars.code default " ")]'>
@@ -67,7 +61,7 @@ payload map ( payload01 , indexOfPayload01 ) -> {
 		</ee:transform>
 		<logger level="INFO" doc:name="Logger" doc:id="12d1d656-d5c1-4fe2-a3b9-ae62ffc8a765" />
 		<error-handler >
-			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="1b3ec995-d04f-4dea-ac73-80a599aa3dab" type="AMERICAN-FLIGHTS-API:BAD_REQUEST">
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="1b3ec995-d04f-4dea-ac73-80a599aa3dab" type="AMERICAN-FLIGHTS-API:BAD_REQUEST">
 				<ee:transform doc:name="No flights" doc:id="80019291-c4d6-40b6-9eae-394dbf27671f">
 					<ee:message>
 						<ee:set-payload><![CDATA[%dw 2.0
@@ -79,7 +73,7 @@ output application/json
 					</ee:message>
 				</ee:transform>
 				<set-variable value="200" doc:name="httpStatus" doc:id="8ffd8703-80f7-45c8-82be-27f0b7ad689d" variableName="httpStatus" />
-			</on-error-propagate>
+			</on-error-continue>
 		</error-handler>
 	</flow>
 	<sub-flow name="setCode" doc:id="5b0f13f6-de10-4c01-a95b-af7d2456355b" >
