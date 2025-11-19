@@ -18,7 +18,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure_Properties_Config" doc:id="9b464f46-5d4d-4e61-b6b2-dd09f2fd5e7b" file="config\local-properties.yaml" key="${runtime.property}">
 		<secure-properties:encrypt algorithm="Blowfish" />
 	</secure-properties:config>
-	<wsc:config name="Web_Service_Consumer_Config" doc:name="Web Service Consumer Config" doc:id="b28a3d00-c962-46cd-950e-964243097c20" >
+	<wsc:config name="Delta_Web_Service_Consumer_Config" doc:name="Web Service Consumer Config" doc:id="b28a3d00-c962-46cd-950e-964243097c20" >
 		<wsc:connection wsdlLocation="${secure::delta.wsdl}" service="${secure::delta.service}" port="${secure::delta.port}">
 			<wsc:web-service-security actor="http://schemas.xmlsoap.org/soap/actor/next" />
 		</wsc:connection>
