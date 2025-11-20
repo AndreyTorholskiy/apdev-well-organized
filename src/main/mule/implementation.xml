@@ -122,7 +122,7 @@ ns ns0 http://soap.training.mulesoft.com/
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<wsc:consume doc:name="Get flights" doc:id="60db01aa-95f0-4599-bed2-9c8a930ff257" config-ref="Web_Service_Consumer_Config" operation="findFlight"/>
+		<wsc:consume doc:name="Get flights" doc:id="60db01aa-95f0-4599-bed2-9c8a930ff257" config-ref="Delta_Web_Service_Consumer_Config" operation="findFlight"/>
 		<ee:transform doc:name="SOAP to [Flight]" doc:id="7915b1e4-65be-487e-8c7a-e8d8a481860d" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
@@ -208,5 +208,19 @@ flatten(payload..payload)]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<logger level="INFO" doc:name="Logger" doc:id="b5ebc603-e50a-4190-a0fa-4c5cb8427bf0" />
+	</flow>
+	<flow name="postFlight" doc:id="6c546e7c-0256-4dbb-b68d-65138c4f8dbc" >
+		<ee:transform doc:name="Transform Message" doc:id="dc1244aa-d2c2-4743-b5de-18551ad698ba" >
+			<ee:message >
+				<ee:set-payload resource="json_flight_playground.dwl" />
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="DWoutput" ><![CDATA[%dw 2.0
+output application/xml
+---
+payload]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="77c96610-d8bb-4b15-82ca-8b394b2bd676" />
 	</flow>
 </mule>
