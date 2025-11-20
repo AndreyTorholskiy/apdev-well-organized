@@ -122,7 +122,7 @@ ns ns0 http://soap.training.mulesoft.com/
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<wsc:consume doc:name="Get flights" doc:id="60db01aa-95f0-4599-bed2-9c8a930ff257" config-ref="Web_Service_Consumer_Config" operation="findFlight"/>
+		<wsc:consume doc:name="Get flights" doc:id="60db01aa-95f0-4599-bed2-9c8a930ff257" config-ref="Delta_Web_Service_Consumer_Config" operation="findFlight"/>
 		<ee:transform doc:name="SOAP to [Flight]" doc:id="7915b1e4-65be-487e-8c7a-e8d8a481860d" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
