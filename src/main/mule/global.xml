@@ -15,11 +15,11 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 	<http:request-config name="HTTP_Request_config_training" doc:name="HTTP Request configuration" doc:id="7db339d0-4d3c-41f6-a499-f41949418c85" basePath="${secure::training.basepath}" >
 		<http:request-connection host="${secure::training.host}" port="${secure::training.port}" />
 	</http:request-config>
-	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure_Properties_Config" doc:id="9b464f46-5d4d-4e61-b6b2-dd09f2fd5e7b" file="config\local-properties.yaml" key="${runtime.property}">
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure_Properties_Config" doc:id="9b464f46-5d4d-4e61-b6b2-dd09f2fd5e7b" file="config\local-properties.yaml" key="f3tr21@hheqloPI15">
 		<secure-properties:encrypt algorithm="Blowfish" />
 	</secure-properties:config>
 	<wsc:config name="Delta_Web_Service_Consumer_Config" doc:name="Web Service Consumer Config" doc:id="b28a3d00-c962-46cd-950e-964243097c20" >
-		<wsc:connection wsdlLocation="${secure::delta.wsdl}" service="${secure::delta.service}" port="${secure::delta.port}">
+		<wsc:connection wsdlLocation="${secure::delta.wdsl}" service="${secure::delta.service}" port="${secure::delta.portl}">
 			<reconnection >
 				<reconnect />
 			</reconnection>
