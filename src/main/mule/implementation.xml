@@ -235,10 +235,13 @@ data: {
 		<ee:transform doc:name="Transform Message" doc:id="e43cd830-a042-42be-9727-f342307d3d98" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
-output application/xml
+output application/java
 ---
-flights: payload map (object, index) -> {
-	'flight$(index)': object
+flights: payload..*return map (object, index) -> {
+
+			dest: object.destination,
+			price: object.price
+
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
