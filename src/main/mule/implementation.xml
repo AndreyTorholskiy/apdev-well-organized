@@ -235,7 +235,7 @@ data: {
 		<ee:transform doc:name="Transform Message" doc:id="e43cd830-a042-42be-9727-f342307d3d98" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
-output application/java
+output application/dw
 
 //var numSeats = 400
 //var numSeats = (x=400) -> x
@@ -255,9 +255,11 @@ fun getNumSeats(planeType: String) = do{
 ---
 flights: payload..*return map (object, index) -> {
 	dest: object.destination,
-	price: object.price,
+	price: object.price as Number as String {format: "###.00"},
 	totalSeats: getNumSeats(object.planeType as String),
-	plane: object.planeType
+	plane: upper(object.planeType as String),
+	date: object.departureDate as Date {format: "yyyy/MM/dd"} as
+	String {format: "MMM dd, yyyy"}
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
