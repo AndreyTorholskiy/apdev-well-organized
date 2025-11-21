@@ -218,9 +218,16 @@ flatten(payload..payload)]]></ee:set-payload>
 				<ee:set-variable variableName="DWoutput" ><![CDATA[%dw 2.0
 output application/xml
 ---
-payload]]></ee:set-variable>
+data: {
+	hub: "MUA",
+	flight @(airline: payload.airline): {
+		code: payload.toAirportCode,
+		airline: payload.airline,
+		pay: "load"
+	}
+}]]></ee:set-variable>
 			</ee:variables>
 		</ee:transform>
-		<logger level="INFO" doc:name="Logger" doc:id="77c96610-d8bb-4b15-82ca-8b394b2bd676" />
+		<logger level="INFO" doc:name="Logger" doc:id="77c96610-d8bb-4b15-82ca-8b394b2bd676" message="#[vars.DWoutput]"/>
 	</flow>
 </mule>
